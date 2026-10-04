@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#04060C">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>يومية التداول</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:dark;--bg:#04060C;--sf:rgba(16,26,50,.52);--s2:rgba(90,135,255,.11);--ink:#EAF1FF;--mu:#8D9DC2;--ln:rgba(125,165,255,.17);--ac:#4C8DFF;--acf:#fff;--win:#20D69B;--loss:#FF5470;--warn:#F5B94A;--on:#04060C;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root[data-theme="light"]{color-scheme:light;--bg:#E8EEFC;--sf:rgba(255,255,255,.66);--s2:rgba(40,90,220,.08);--ink:#0B1530;--mu:#5A6A8C;--ln:rgba(40,90,220,.16);--ac:#2563EB;--win:#0B8F68;--loss:#D12F4B;--warn:#B7791F;--on:#fff}
+*{box-sizing:border-box}
+html{background:var(--bg)}html,body{margin:0;color:var(--ink);font-family:"Readex Pro","IBM Plex Sans Arabic",system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;font-size:16px;line-height:1.5;-webkit-tap-highlight-color:transparent}
+.n{direction:ltr;unicode-bidi:isolate;display:inline-block;font-variant-numeric:tabular-nums}
+#top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);background:color-mix(in srgb,var(--bg) 85%,transparent);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);padding:12px 16px;border-bottom:1px solid var(--ln)}
+.gs{display:flex;gap:10px;max-width:560px;margin:0 auto}
+.g{flex:1;min-width:0;display:flex;align-items:center;gap:10px;background:var(--sf);border:1px solid var(--ln);border-radius:18px;padding:8px 12px 8px 8px}
+.g svg{flex:none;width:52px;height:52px}
+.trk,.arc{fill:none;stroke-width:6}.trk{stroke:var(--s2)}.arc{stroke-linecap:round}
+.arc.ok{stroke:var(--win)}.arc.warn{stroke:var(--warn)}.arc.bad{stroke:var(--loss)}
+.pc{font-size:13px;font-weight:600;fill:var(--ink);direction:ltr}
+.gt{display:flex;flex-direction:column;min-width:0}.gt span{font-size:11.5px;color:var(--mu);line-height:1.3}
+.gt b{font-size:15px;font-weight:600;white-space:nowrap}.gt small{color:var(--mu);font-weight:400;font-size:11.5px}
+.alert{max-width:560px;margin:10px auto 0;padding:9px 14px;border-radius:14px;background:var(--sf);border:1px solid var(--loss);color:var(--ink);font-size:14px;font-weight:500}
+main{padding:18px 16px 124px;max-width:560px;margin:0 auto}
+.card{background:var(--sf);border:1px solid var(--ln);border-radius:22px;padding:18px;margin-bottom:14px}
+h2{margin:0 0 14px;font-size:17px;font-weight:600}
+label{display:block;font-size:12.5px;font-weight:500;color:var(--mu);margin-bottom:14px;flex:1}
+input,select,textarea{display:block;width:100%;margin-top:6px;padding:12px 14px;font:inherit;font-size:16px;color:var(--ink);background:var(--s2);border:1px solid transparent;border-radius:13px}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--ac);outline-offset:0}
+button:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+input[type=file]{padding:10px;font-size:14px}
+.row{display:flex;gap:10px}.row3{display:flex;gap:8px}
+.seg{display:flex;gap:8px;margin-bottom:14px}
+.seg button{flex:1;padding:14px;font:inherit;font-weight:600;border:0;border-radius:15px;background:var(--s2);color:var(--mu)}
+.seg button.on{color:var(--on)}.seg button.on.buy{background:var(--win)}.seg button.on.sell{background:var(--loss)}
+button{font:inherit;cursor:pointer}
+.primary{width:100%;padding:15px;border:0;border-radius:15px;background:var(--ac);color:var(--acf);font-weight:600;font-size:16px}
+.row button{flex:1;padding:12px;border:0;border-radius:14px;background:var(--s2);color:var(--ink);font-weight:500}
+nav{position:fixed;inset-inline:12px;bottom:calc(10px + env(safe-area-inset-bottom,0px));max-width:536px;margin-inline:auto;display:flex;gap:2px;padding:6px;border-radius:26px;background:var(--sf);background:color-mix(in srgb,var(--sf) 88%,transparent);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border:1px solid var(--ln);box-shadow:0 12px 32px rgba(0,0,0,.22);z-index:6}
+nav button{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 2px;border:0;border-radius:20px;background:none;color:var(--mu);font-size:11.5px;font-weight:500}
+nav svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+nav button.on{color:var(--ac);background:var(--s2)}
+.tr{border-inline-start:5px solid var(--win)}.tr.l{border-inline-start-color:var(--loss)}
+.tr .h{display:flex;align-items:center;gap:10px}.tr .h b{font-size:17px;font-weight:600}
+.tr .h .n{margin-inline-start:auto;font-size:22px;font-weight:700}
+.tag{font-size:11.5px;font-weight:600;padding:2px 10px;border-radius:99px;background:var(--s2)}
+.tag.buy{color:var(--win)}.tag.sell{color:var(--loss)}
+.win{color:var(--win)}.loss{color:var(--loss)}
+.m{display:flex;gap:12px;flex-wrap:wrap;margin:6px 0;font-size:13px;color:var(--mu)}
+.tr p{margin:6px 0;font-size:15px}
+.link{border:0;background:none;color:var(--loss);padding:6px 0;font-size:13px;font-weight:500}
+.empty{text-align:center;color:var(--mu);padding:56px 24px;border:1px dashed var(--ln);border-radius:22px}
+.hero{padding:20px 18px 0;overflow:hidden}.hero .lb{display:block;font-size:13px;color:var(--mu)}
+.hero b{display:block;font-size:42px;font-weight:700;letter-spacing:-.5px;line-height:1.2}
+.cv{display:block;width:calc(100% + 36px);margin:8px -18px 0;height:120px}
+.zl{stroke:var(--ln);stroke-width:1;stroke-dasharray:3 4;vector-effect:non-scaling-stroke}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.st{background:var(--sf);border:1px solid var(--ln);border-radius:18px;padding:14px}
+.st span{display:block;font-size:12.5px;color:var(--mu)}.st b{display:block;font-size:24px;font-weight:700;margin-top:2px}
+.ms{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--ln)}.ms:last-child{border:0}
+[hidden]{display:none!important}
+.thumb{display:block;width:100%;max-height:120px;object-fit:cover;border-radius:14px;margin:8px 0;border:1px solid var(--ln)}
+.thumb.big{max-height:none;object-fit:contain}.pre{margin-bottom:14px}
+.mini{display:flex;gap:8px;margin:6px 0}.mini select{margin-top:0;font-size:14px;padding:8px 10px}
+#toast{position:fixed;inset-inline:16px;bottom:calc(92px + env(safe-area-inset-bottom,0px));max-width:420px;margin-inline:auto;background:var(--ink);color:var(--bg);padding:11px 16px;border-radius:99px;text-align:center;font-size:14px;font-weight:500;opacity:0;pointer-events:none;transition:opacity .2s;z-index:7}
+#toast.show{opacity:1}
+@media (prefers-reduced-motion:reduce){#toast{transition:none}}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.cd{aspect-ratio:1;border-radius:10px;background:var(--s2);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:10.5px;color:var(--mu);line-height:1.25;min-width:0}
+.cd b{font-size:11px;font-weight:600;color:var(--ink)}
+.cd.hd{aspect-ratio:auto;background:none;padding:2px 0}
+.cd.w{background:color-mix(in srgb,var(--win) calc(var(--i)*1%),var(--s2))}
+.cd.l{background:color-mix(in srgb,var(--loss) calc(var(--i)*1%),var(--s2))}
+.cn{display:flex;align-items:center;gap:8px;margin-bottom:12px}.cn h2{margin:0;flex:1;font-size:16px}
+.cn button{width:40px;height:40px;border:0;border-radius:13px;background:var(--s2);color:var(--ink);font-size:20px}
+body::before{content:"";position:fixed;inset:-25%;z-index:-1;pointer-events:none;background:radial-gradient(40% 32% at 82% 8%,rgba(47,107,255,.42),transparent 70%),radial-gradient(38% 30% at 6% 48%,rgba(30,80,230,.30),transparent 70%),radial-gradient(34% 26% at 70% 95%,rgba(80,150,255,.22),transparent 70%);animation:dr 22s ease-in-out infinite alternate}
+:root[data-theme="light"] body::before{opacity:.55}
+@keyframes dr{to{transform:translate3d(-4%,3%,0) scale(1.08)}}
+@keyframes up{from{opacity:0;transform:translateY(16px) scale(.98)}}
+@keyframes pu{50%{box-shadow:0 0 0 14px rgba(76,141,255,0),0 0 46px rgba(76,141,255,.7)}}
+.card,.g,.st,.empty{background:var(--sf);-webkit-backdrop-filter:blur(20px) saturate(150%);backdrop-filter:blur(20px) saturate(150%);box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 14px 34px -14px rgba(0,0,0,.65)}
+#top{background:color-mix(in srgb,var(--bg) 52%,transparent)}
+.primary{background:linear-gradient(135deg,#2F6BFF,#52A8FF);color:#fff;box-shadow:0 10px 26px -8px rgba(47,107,255,.8);transition:transform .15s}
+.primary:active,.seg button:active,nav button:active{transform:scale(.96)}
+nav{box-shadow:0 16px 40px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.1)}
+nav button{transition:all .25s}
+nav button.on{color:var(--ink);background:linear-gradient(135deg,rgba(60,120,255,.6),rgba(60,120,255,.16));box-shadow:0 0 22px rgba(60,120,255,.4)}
+.hero b{text-shadow:0 0 36px color-mix(in srgb,currentColor 45%,transparent)}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--ac);box-shadow:0 0 0 5px rgba(76,141,255,.2)}
+.dis{display:flex;align-items:center;gap:16px}.dis svg{flex:none;width:104px;height:104px}
+.dis .sc{font-size:26px;font-weight:700;fill:var(--ink);direction:ltr}
+.dis h2{margin:0 0 6px}.dis p{margin:2px 0;font-size:13px;color:var(--mu)}.dis p b{color:var(--ink);font-size:20px}
+.wl{position:relative;overflow:hidden;text-align:center;padding:30px 20px;background:linear-gradient(160deg,rgba(47,107,255,.28),var(--sf) 70%)}
+.orb{width:62px;height:62px;margin:0 auto 14px;border-radius:50%;background:radial-gradient(circle at 32% 28%,#BFD8FF,#3B7BFF 55%,#16348F);box-shadow:0 0 34px rgba(76,141,255,.6);animation:pu 3.2s ease-in-out infinite}
+.wl h1{margin:0 0 8px;font-size:26px;font-weight:700;background:linear-gradient(90deg,var(--ink),#7FB0FF);-webkit-background-clip:text;background-clip:text;color:transparent}
+.wl p{margin:0 0 16px;color:var(--mu);font-size:14px}
+.chips{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}.chips span{font-size:12px;font-weight:500;padding:6px 12px;border-radius:99px;background:var(--s2);border:1px solid var(--ln)}
+#v.in>*{animation:up .55s cubic-bezier(.2,.8,.2,1) both}
+#v.in>*:nth-child(2){animation-delay:.06s}#v.in>*:nth-child(3){animation-delay:.12s}#v.in>*:nth-child(4){animation-delay:.18s}#v.in>*:nth-child(n+5){animation-delay:.24s}
+@media (prefers-reduced-motion:reduce){body::before,.orb,#v.in>*{animation:none}}
+.wk{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;text-align:center;font-size:11px;color:var(--mu)}
+.wk div{display:flex;flex-direction:column;align-items:center}.wk em{font-style:normal;margin-top:6px}
+.wk .u,.wk .d{height:48px;width:100%;display:flex;justify-content:center}.wk .u{align-items:flex-end;border-bottom:1px solid var(--ln)}.wk .d{align-items:flex-start}
+.wk i{display:block;width:56%;border-radius:6px;box-shadow:0 0 14px -2px currentColor}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--mu);margin-inline-end:9px}.dot.on{background:var(--win);box-shadow:0 0 10px var(--win)}
+.mt{background:linear-gradient(160deg,rgba(47,107,255,.2),var(--sf) 65%)}
+#toast{z-index:30}#ob:empty{display:none}
+#ob{position:fixed;inset:0;z-index:20;overflow:auto;background:radial-gradient(60% 38% at 50% 0%,rgba(47,107,255,.5),transparent 70%),radial-gradient(40% 30% at 90% 90%,rgba(60,130,255,.25),transparent 70%),var(--bg)}
+.obw{min-height:100%;display:flex;flex-direction:column;padding:calc(18px + env(safe-area-inset-top,0px)) 24px calc(24px + env(safe-area-inset-bottom,0px));max-width:480px;margin:0 auto}
+.obw .obs{align-self:flex-end;color:var(--mu);font-size:14px}
+.obc{flex:1;display:flex;flex-direction:column;justify-content:center;text-align:center;animation:up .5s both}
+.obi{width:120px;height:120px;margin:0 auto 28px;border-radius:36px;display:grid;place-items:center;background:linear-gradient(145deg,rgba(76,141,255,.38),rgba(76,141,255,.06));border:1px solid var(--ln);box-shadow:0 0 60px -6px rgba(76,141,255,.65),inset 0 1px 0 rgba(255,255,255,.15)}
+.obi svg{width:54px;height:54px;fill:none;stroke:#BFD8FF;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 8px rgba(120,180,255,.8))}
+.obc h1{margin:0 0 10px;font-size:28px;font-weight:700;background:linear-gradient(90deg,var(--ink),#7FB0FF);-webkit-background-clip:text;background-clip:text;color:transparent}
+.obc p{margin:0;color:var(--mu);font-size:15px;line-height:1.7}
+.obf{text-align:start;margin-top:20px}
+.obd{display:flex;gap:8px;justify-content:center;margin:20px 0}.obd i{width:8px;height:8px;border-radius:99px;background:var(--ln);transition:all .3s}.obd i.on{width:26px;background:var(--ac);box-shadow:0 0 12px var(--ac)}
+</style>
+</head>
+<body>
+<div id="top"></div>
+<main id="v"></main>
+<nav id="tabs"></nav>
+<div id="toast"></div>
+<div id="ob"></div>
+<script>
+const K='tj1',$=s=>document.querySelector(s);
+let S=null;try{S=JSON.parse(localStorage.getItem(K))}catch(e){}
+S=S&&S.trades?S:{trades:[],rules:{size:10000,daily:5,dd:10}};
+const DS={th:'auto',pair:'XAUUSD',warn:80,maxT:0,off:0,tags:''},fix=()=>{S.set=Object.assign({},DS,S.set||{})};fix();
+const save=()=>{try{localStorage.setItem(K,JSON.stringify(S));return true}catch(e){return false}};
+const esc=t=>String(t==null?'':t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const today=()=>{const d=new Date(Date.now()+(S.set.off||0)*36e5);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+const f=(n,d=2)=>Number(n).toLocaleString('en-US',{maximumFractionDigits:d});
+const sg=n=>(n>0?'+':'')+f(n);
+const TABS=[['add','تسجيل'],['list','الصفقات'],['stats','الإحصائيات'],['rules','القواعد'],['set','الإعدادات']];
+const MIS=['بدون خطأ','دخول بدري','ما احترمتش الستوب','زودت اللوت','صفقة انتقام','ضد الاتجاه','خروج بدري'];
+const MOOD=['هادي','متوتر','طماع','خايف','غضبان'];
+let tab='add',dir='buy',pd=null,ps='win',eid=null;
+function sp(k){ps=k;$('#q1').className=k=='win'?'on buy':'';$('#q2').className=k=='loss'?'on sell':''}
+function calcR(d,en,ex,sl){if(en==null||ex==null||sl==null)return null;const risk=d=='buy'?en-sl:sl-en;if(risk<=0)return null;return(d=='buy'?ex-en:en-ex)/risk}
+function toast(m){const t=$('#toast');t.textContent=tx(m);t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200)}
+function gauge(l,u,lim){const p=lim>0?Math.min(100,u/lim*100):0,c=p>=85?'bad':p>=60?'warn':'ok',C=2*Math.PI*22;
+return`<div class="g"><svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="22" class="trk"/><circle cx="28" cy="28" r="22" class="arc ${c}" stroke-dasharray="${C}" stroke-dashoffset="${C*(1-p/100)}" transform="rotate(-90 28 28)"/><text x="28" y="32" text-anchor="middle" class="pc">${Math.round(p)}%</text></svg><div class="gt"><span>${l}</span><b class="n">${f(u)}<small> / ${f(lim)}$</small></b></div></div>`}
+function renderTop(){const r=S.rules,t=today();
+const td=S.trades.filter(x=>x.date==t).reduce((a,x)=>a+x.pnl,0),tot=S.trades.reduce((a,x)=>a+x.pnl,0);
+const dl=r.size*r.daily/100,ml=r.size*r.dd/100,du=Math.max(0,-td),mu=Math.max(0,-tot);
+const dp=dl>0?du/dl:0,mp=ml>0?mu/ml:0;
+const msg=(dp>=1||mp>=1)?'وصلت للحد. وقّف التداول النهارده.':(dp>=S.set.warn/100||mp>=S.set.warn/100)?'قربت من الحد. فكّر قبل أي صفقة جديدة.':'';
+$('#top').innerHTML='<div class="gs">'+gauge('خسارة النهارده',du,dl)+gauge('الـ drawdown الكلي',mu,ml)+'</div>'+(msg?`<p class="alert">${msg}</p>`:'')+(S.set.maxT>0&&S.trades.filter(x=>x.date==t).length>=S.set.maxT?'<p class="alert">وصلت للحد الأقصى لعدد الصفقات النهارده.</p>':'')}
+const IC={add:'<path d="M12 5v14M5 12h14"/>',list:'<path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/>',stats:'<path d="M5 20V11M12 20V4M19 20v-6"/>',rules:'<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/>',set:'<path d="M4 7h9M19 7h1M4 17h1M11 17h9"/><circle cx="16" cy="7" r="2.2"/><circle cx="8" cy="17" r="2.2"/>'};
+function nav(){$('#tabs').innerHTML=TABS.map(([k,l])=>`<button class="${k==tab?'on':''}" onclick="go('${k}')"><svg viewBox="0 0 24 24">${IC[k]}</svg><span>${l}</span></button>`).join('')}
+function go(t){tab=t;eid=null;pd=null;cw=false;render();scrollTo(0,0)}
+function sd(d){dir=d;$('#b1').className=d=='buy'?'on buy':'';$('#b2').className=d=='sell'?'on sell':''}
+const opts=a=>a.map(x=>`<option value="${x}">${x}</option>`).join('');
+const num=(id,l)=>`<label>${l}<input id="${id}" type="number" step="any" inputmode="decimal"></label>`;
+function vAdd(){return(S.trades.length?'':WL)+vMT()+`<section class="card"><h2 id="fh">صفقة جديدة</h2>
+<div class="row"><label>التاريخ<input id="d" type="date" value="${today()}"></label>
+<label>الزوج<input id="p" list="pl" value="${esc(S.set.pair)}"><datalist id="pl"><option>XAUUSD</option><option>EURUSD</option><option>GBPUSD</option><option>USDJPY</option><option>BTCUSDT</option><option>ETHUSDT</option></datalist></label></div>
+<div class="seg"><button id="b1" class="${dir=='buy'?'on buy':''}" onclick="sd('buy')">شراء</button><button id="b2" class="${dir=='sell'?'on sell':''}" onclick="sd('sell')">بيع</button></div>
+<div class="row3">${num('en','دخول')}${num('sl','ستوب')}${num('ex','خروج')}</div>
+<div class="seg"><button id="q1" class="${ps=='win'?'on buy':''}" onclick="sp('win')">ربح</button><button id="q2" class="${ps=='loss'?'on sell':''}" onclick="sp('loss')">خسارة</button></div>${num('pn','النتيجة بالدولار')}
+<div class="row"><label>حالتك النفسية<select id="mo">${opts(MOOD)}</select></label><label>الخطأ<select id="mi">${opts(ML())}</select></label></div>
+<label>سبب الدخول وملاحظات<textarea id="nt" rows="2"></textarea></label>
+<label>سكرين شوت (اختياري)<input id="sh" type="file" accept="image/*" onchange="pick(this)"></label><img id="pv" class="thumb pre" alt="" hidden>
+<button id="sv" class="primary" onclick="addT()">حفظ الصفقة</button></section>`}
+function addT(){const g=i=>$('#'+i).value,n=i=>g(i)===''?null:parseFloat(g(i));
+let pnl=n('pn');if(pnl>0&&ps=='loss')pnl=-pnl;if(pnl===null||isNaN(pnl)||!g('p').trim()){toast('اكتب الزوج والنتيجة بالدولار');return}
+const en=n('en'),ex=n('ex'),sl=n('sl');
+const o={date:g('d')||today(),pair:g('p').trim().toUpperCase(),dir,en,ex,sl,pnl,r:calcR(dir,en,ex,sl),mood:g('mo'),mis:g('mi'),note:g('nt').trim(),img:shot},t=eid?S.trades.find(x=>x.id==eid):null,old=t?{...t}:null;
+if(t)Object.assign(t,o);else S.trades.push({id:Date.now(),...o});
+if(!save()){if(t)Object.assign(t,old);else S.trades.pop();toast('المساحة امتلأت. صدّر نسخة واحذف صور قديمة');return}
+const was=eid;shot=null;ps='win';eid=null;toast(was?'اتحفظ التعديل':'اتحفظت الصفقة');if(was)tab='list';render()}
+function del(id){if(pd===id){S.trades=S.trades.filter(t=>t.id!==id);pd=null;save();render()}else{pd=id;render()}}
+function vList(){const a=[...S.trades].sort((x,y)=>y.date.localeCompare(x.date)||y.id-x.id);
+if(!a.length)return'<p class="empty">لسه مفيش صفقات. سجّل أول صفقة من تبويب «تسجيل».</p>';
+return a.map(t=>`<article class="card tr ${t.pnl>=0?'w':'l'}"><div class="h"><b>${esc(t.pair)}</b><span class="tag ${t.dir}">${t.dir=='buy'?'شراء':'بيع'}</span><span class="n big ${t.pnl>=0?'win':'loss'}">${sg(t.pnl)}$</span></div>
+<div class="m"><span class="n">${t.date}</span>${t.r!=null?`<span class="n">${sg(t.r)}R</span>`:''}</div>
+${t.note?`<p>${esc(t.note)}</p>`:''}${t.img?`<img class="thumb" src="${t.img}" alt="سكرين شوت" onclick="big(this)">`:`<button class="link" style="color:var(--ac)" onclick="attach(${t.id})">إضافة سكرين شوت</button>`}<div class="mini"><select onchange="upd(${t.id},'mood',this.value)">${sel(MOOD,t.mood)}</select><select onchange="upd(${t.id},'mis',this.value)">${sel(ML(),t.mis)}</select></div><button class="link" style="color:var(--ac);margin-inline-end:20px" onclick="edit(${t.id})">تعديل</button><button class="link" onclick="del(${t.id})">${pd===t.id?'اضغط تاني للتأكيد':'حذف'}</button></article>`).join('')}
+function curve(a){const q=[...a].sort((x,y)=>x.date.localeCompare(y.date)||x.id-y.id);let c=0;const pt=[0,...q.map(x=>c+=x.pnl)],mn=Math.min(...pt),mx=Math.max(...pt),W=320,H=120,sp=mx-mn||1,X=i=>i/(pt.length-1)*W,Y=v=>H-10-(v-mn)/sp*(H-20),d=pt.map((v,i)=>(i?'L':'M')+X(i).toFixed(1)+' '+Y(v).toFixed(1)).join(''),col=c>=0?'var(--win)':'var(--loss)';
+return`<svg class="cv" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none"><defs><linearGradient id="gr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${col}" stop-opacity=".3"/><stop offset="1" stop-color="${col}" stop-opacity="0"/></linearGradient></defs><line class="zl" x1="0" x2="${W}" y1="${Y(0)}" y2="${Y(0)}"/><path d="${d}L${W} ${H}L0 ${H}Z" fill="url(#gr)"/><path d="${d}" fill="none" stroke="${col}" stroke-width="2.5" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></svg>`}
+function vStats(){const a=S.trades;if(!a.length)return'<p class="empty">الإحصائيات هتظهر بعد أول صفقة.</p>';
+const tot=a.reduce((s,x)=>s+x.pnl,0),w=a.filter(x=>x.pnl>0).length,rs=a.filter(x=>x.r!=null),ar=rs.length?rs.reduce((s,x)=>s+x.r,0)/rs.length:null;
+const dy={};a.forEach(x=>dy[x.date]=(dy[x.date]||0)+x.pnl);
+const de=Object.entries(dy).sort((x,y)=>x[1]-y[1]),ws=de[0],bs=de[de.length-1];
+const mm={};a.filter(x=>x.mis&&x.mis!=MIS[0]).forEach(x=>{const o=mm[x.mis]||(mm[x.mis]={c:0,p:0});o.c++;o.p+=x.pnl});
+const ml=Object.entries(mm).sort((x,y)=>x[1].p-y[1].p);
+const st=(l,v,c='')=>`<div class="st"><span>${l}</span><b class="n ${c}">${v}</b></div>`;
+return`<section class="card hero"><span class="lb">صافي النتيجة</span><b data-cu="${tot}" class="n ${tot>=0?'win':'loss'}">${sg(tot)}$</b>${curve(a)}</section>${vDis(a)}<div class="grid">${st('نسبة الربح',f(w/a.length*100,0)+'%')}${st('عدد الصفقات',a.length)}${st('Profit factor',(()=>{const g=a.filter(x=>x.pnl<0).reduce((u,x)=>u-x.pnl,0),w2=a.filter(x=>x.pnl>0).reduce((u,x)=>u+x.pnl,0);return g?f(w2/g):'-'})())}${st('متوسط R',ar==null?'-':sg(ar))}${st('أفضل يوم',sg(bs[1])+'$','win')}${st('أسوأ يوم',sg(ws[1])+'$','loss')}</div>
+${vCal(a)}${vWk(a)}<section class="card"><h2>أخطاءك مكلّفاك كام</h2>${ml.length?ml.map(([k,o])=>`<div class="ms"><span>${esc(k)} <span class="n">×${o.c}</span></span><b class="n ${o.p>=0?'win':'loss'}">${sg(o.p)}$</b></div>`).join(''):'<p class="m">مسجّلتش أخطاء لحد دلوقتي.</p>'}</section>`}
+const WL='<section class="card wl"><div class="orb"></div><h1>أهلاً في يوميتك</h1><p>سجّل صفقاتك، راقب حدود حسابك، وشوف أنماطك بوضوح.</p><div class="chips"><span>القواعد</span><span>استيراد من MT5</span><span>الإحصائيات</span></div></section>';
+function vDis(a){const r=S.rules,dl=r.size*r.daily/100,cl=a.filter(x=>!x.mis||x.mis==MIS[0]).length/a.length,dy={};a.forEach(x=>dy[x.date]=(dy[x.date]||0)+x.pnl);
+const ds=Object.values(dy),ok=ds.filter(v=>-v<=dl).length/ds.length,sc=Math.round(60*cl+40*ok),C=2*Math.PI*44;let st=0;
+for(const t of [...a].sort((x,y)=>y.date.localeCompare(x.date)||y.id-x.id)){if(!t.mis||t.mis==MIS[0])st++;else break}
+return`<section class="card dis"><svg viewBox="0 0 104 104"><defs><linearGradient id="dg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2F6BFF"/><stop offset="1" stop-color="#7AC0FF"/></linearGradient></defs><circle cx="52" cy="52" r="44" class="trk" style="stroke-width:8"/><circle cx="52" cy="52" r="44" fill="none" stroke="url(#dg)" stroke-width="8" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C*(1-sc/100)}" transform="rotate(-90 52 52)" style="filter:drop-shadow(0 0 6px rgba(76,141,255,.8))"/><text x="52" y="61" text-anchor="middle" class="sc">${sc}</text></svg><div><h2>مستوى الانضباط</h2><p>صفقات نظيفة ورا بعض</p><p><b class="n">${st}</b></p></div></section>`}
+function cu(){if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;document.querySelectorAll('[data-cu]').forEach(e=>{const to=parseFloat(e.dataset.cu),t0=performance.now();(function q(t){const k=Math.min(1,(t-t0)/900);e.textContent=sg(Math.round(to*(1-Math.pow(1-k,3))*100)/100)+'$';if(k<1)requestAnimationFrame(q)})(t0)})}
+function edit(id){eid=id;tab='add';pd=null;render();scrollTo(0,0)}
+function fillE(){const t=S.trades.find(x=>x.id==eid);if(!t){eid=null;return}
+const v=(i,x)=>{const e=$('#'+i);if(e&&x!=null)e.value=x};
+v('d',t.date);v('p',t.pair);v('en',t.en);v('sl',t.sl);v('ex',t.ex);v('pn',Math.abs(t.pnl));v('mo',t.mood||MOOD[0]);v('mi',t.mis||MIS[0]);v('nt',t.note);
+sd(t.dir);sp(t.pnl<0?'loss':'win');shot=t.img||null;if(shot){const p=$('#pv');p.src=shot;p.hidden=false}
+$('#fh').textContent=tx('تعديل الصفقة');const b=$('#sv');b.textContent=tx('حفظ التعديل');b.insertAdjacentHTML('afterend',`<button class="link" style="color:var(--mu);margin-top:8px" onclick="go('list')">${tx('إلغاء')}</button>`)}
+function vWk(a){const lc=LANG=='ar'?'ar-EG-u-nu-latn':LANG,w=Array(7).fill(0);a.forEach(x=>{const d=new Date(x.date+'T00:00:00').getDay();if(d>=0)w[d]+=x.pnl});const mx=Math.max(1,...w.map(Math.abs));
+return`<section class="card"><h2>أداءك حسب اليوم</h2><div class="wk">${w.map((v,i)=>`<div><span class="u">${v>0?`<i style="height:${Math.max(6,v/mx*100)}%;background:var(--win)"></i>`:''}</span><span class="d">${v<0?`<i style="height:${Math.max(6,-v/mx*100)}%;background:var(--loss)"></i>`:''}</span><em>${new Date(2024,0,7+i).toLocaleDateString(lc,{weekday:'short'})}</em></div>`).join('')}</div></section>`}
+function vMT(){const y=S.set.sync,lc=LANG=='ar'?'ar-EG-u-nu-latn':LANG,ok=y&&new Date(y.t).toDateString()==new Date().toDateString();
+return`<section class="card mt"><h2><i class="dot${ok?' on':''}"></i>ربط MT5</h2><p class="m" style="margin:0 0 12px">${y?tx('آخر مزامنة')+': <span class="n">'+new Date(y.t).toLocaleString(lc,{dateStyle:'medium',timeStyle:'short'})+'</span> · <span class="n">'+y.n+'</span> '+tx('صفقة مضافة'):tx('لسه ما زامنتش')}</p><input id="mf" type="file" accept=".html,.htm,.csv,.txt" hidden onchange="imp(this)"><button class="primary" onclick="$('#mf').click()">مزامنة من MT5</button><p class="m" style="margin:12px 0 0">في MT5: تبويب History، كليك يمين، Report، HTML. اختار الملف هنا. الصفقات المكررة بتتخطّى.</p></section>`}
+let ob=0;
+const OB=[['add','سجّل صفقاتك في ثواني','اكتب الصفقة أو زامن تقرير MT5 دفعة واحدة.'],['rules','احمي حسابك','عدّادات بتحذّرك قبل ما توصل لحد الخسارة اليومي أو الـ drawdown.'],['stats','افهم أنماطك','تقويم أرباح وأداء كل يوم ومستوى انضباط بيبيّن أخطاءك بالدولار.']];
+function obR(){const e=$('#ob');if(S.set.ob){e.innerHTML='';return}const k=OB[ob],r=S.rules;
+e.innerHTML=`<div class="obw"><button class="link obs" onclick="obEnd(0)">تخطّي</button>`+(k?`<div class="obc"><div class="obi"><svg viewBox="0 0 24 24">${IC[k[0]]}</svg></div><h1>${k[1]}</h1><p>${k[2]}</p></div>`:`<div class="obc"><div class="obi"><svg viewBox="0 0 24 24">${IC.set}</svg></div><h1>جهّز حسابك</h1><p>ده بيظبط العدّادات. تقدر تغيّره بعدين من القواعد.</p><div class="obf"><label>حجم الحساب ($)<input id="os" type="number" inputmode="decimal" value="${r.size}"></label><div class="row"><label>حد الخسارة اليومي %<input id="od" type="number" step="any" inputmode="decimal" value="${r.daily}"></label><label>حد الـ drawdown الكلي %<input id="om" type="number" step="any" inputmode="decimal" value="${r.dd}"></label></div></div></div>`)+`<div class="obd">${[0,1,2,3].map(i=>`<i class="${i==ob?'on':''}"></i>`).join('')}</div><button class="primary" onclick="${k?'obN()':'obEnd(1)'}">${k?'التالي':'ابدأ'}</button></div>`}
+function obN(){ob++;render()}
+function obEnd(sv){if(sv){const s=parseFloat($('#os').value),d=parseFloat($('#od').value),m=parseFloat($('#om').value);if(!(s>0)||!(d>0)||!(m>0)){toast('اكتب أرقام صحيحة');return}S.rules={size:s,daily:d,dd:m}}S.set.ob=1;ob=0;save();render()}
+function obRe(){S.set.ob=0;ob=0;render();scrollTo(0,0)}
+let cmo=0;
+function calNav(d){cmo+=d;render()}
+function vCal(a){const n=new Date(Date.now()+(S.set.off||0)*36e5),b=new Date(n.getFullYear(),n.getMonth()+cmo,1),y=b.getFullYear(),m=b.getMonth(),pre=y+'-'+String(m+1).padStart(2,'0')+'-',lc=LANG=='ar'?'ar-EG-u-nu-latn':LANG;
+const dy={};a.forEach(x=>{if(x.date.startsWith(pre))dy[x.date]=(dy[x.date]||0)+x.pnl});
+const vs=Object.values(dy),mx=Math.max(1,...vs.map(Math.abs)),tot=vs.reduce((s,v)=>s+v,0),dn=new Date(y,m+1,0).getDate(),ar=LANG=='ar';
+let h='';for(let i=0;i<7;i++)h+=`<span class="cd hd">${new Date(2024,0,7+i).toLocaleDateString(lc,{weekday:'narrow'})}</span>`;
+for(let i=0;i<b.getDay();i++)h+='<span></span>';
+for(let d=1;d<=dn;d++){const v=dy[pre+String(d).padStart(2,'0')];h+=v==null?`<span class="cd"><span class="n">${d}</span></span>`:`<span class="cd ${v>=0?'w':'l'}" style="--i:${Math.round(18+Math.abs(v)/mx*42)}"><span class="n">${d}</span><b class="n">${v>0?'+':''}${Math.round(v)}</b></span>`}
+return`<section class="card"><div class="cn"><button aria-label="${tx('الشهر السابق')}" onclick="calNav(-1)">${ar?'›':'‹'}</button><h2>${b.toLocaleDateString(lc,{month:'long',year:'numeric'})}</h2><button aria-label="${tx('الشهر التالي')}" onclick="calNav(1)">${ar?'‹':'›'}</button></div><div class="cal">${h}</div><div class="ms" style="margin-top:12px"><span>${tx('صافي الشهر')}</span><b class="n ${tot>=0?'win':'loss'}">${sg(tot)}$</b></div></section>`}
+function vRules(){const r=S.rules;return`<section class="card"><h2>قواعد الحساب</h2>
+<label>حجم الحساب ($)<input id="rs" type="number" inputmode="decimal" value="${r.size}"></label>
+<div class="row"><label>حد الخسارة اليومي %<input id="rd" type="number" step="any" inputmode="decimal" value="${r.daily}"></label><label>حد الـ drawdown الكلي %<input id="rm" type="number" step="any" inputmode="decimal" value="${r.dd}"></label></div>
+<button class="primary" onclick="saveR()">حفظ القواعد</button>
+<p class="m">راجع النسب مع شروط شركتك. العدّاد بيحسب من الصفقات اللي سجّلتها هنا بس، مش من رصيد حسابك الفعلي.</p></section>`}
+let cw=false;
+const ML=()=>MIS.concat(S.set.tags.split(',').map(x=>x.trim()).filter(Boolean));
+const so=(c,v,l)=>`<option value="${v}"${c==v?' selected':''}>${l}</option>`;
+function sset(k,v){S.set[k]=v;save();render()}
+function wipe(){if(cw){S={trades:[],rules:{size:10000,daily:5,dd:10}};fix();save();cw=false}else cw=true;render()}
+function vSet(){const c=S.set;return`<section class="card"><label>اللغة / Language<select onchange="setL(this.value)">${LG.map(([k,n])=>`<option value="${k}"${k==LANG?' selected':''}>${n}</option>`).join('')}</select></label></section>
+<section class="card"><h2>تفضيلات</h2>
+<label>المظهر<select onchange="sset('th',this.value)">${so(c.th,'auto','تلقائي')}${so(c.th,'light','فاتح')}${so(c.th,'dark','داكن')}</select></label>
+<label>الزوج الافتراضي<input value="${esc(c.pair)}" onchange="sset('pair',this.value.trim().toUpperCase()||'XAUUSD')"></label>
+<label>تنبيه عند وصول العدّاد لـ %<input type="number" inputmode="decimal" value="${c.warn}" onchange="sset('warn',Math.min(100,Math.max(1,parseFloat(this.value)||80)))"></label>
+<label>أقصى عدد صفقات في اليوم (0 يعني بدون حد)<input type="number" inputmode="numeric" value="${c.maxT}" onchange="sset('maxT',Math.max(0,parseInt(this.value)||0))"></label>
+<label>فرق توقيت سيرفر البروكر عن جهازك (بالساعات)<input type="number" inputmode="numeric" value="${c.off}" onchange="sset('off',parseInt(this.value)||0)"></label>
+<label>أنواع أخطاء إضافية (مفصولة بفاصلة)<input value="${esc(c.tags)}" onchange="sset('tags',this.value)"></label></section>
+<section class="card"><button class="primary" onclick="obRe()">عرض شرح التطبيق</button></section>
+<section class="card"><h2>نسخة احتياطية</h2><p class="m">بياناتك محفوظة على الجهاز ده بس. صدّرها وخزّنها في مكان تاني من وقت لوقت.</p>
+<textarea id="bk" rows="3" placeholder="هنا هيظهر النص للنسخ، أو الصق نسخة قديمة للاسترجاع"></textarea>
+<div class="row" style="margin-top:10px"><button onclick="ex()">تصدير</button><button onclick="im()">استرجاع</button></div></section>
+<section class="card"><h2>استيراد من MT5</h2><p class="m">في MT5: تبويب History، كليك يمين، Report، HTML. اختار الملف هنا. الصفقات المكررة بتتخطّى.</p><input type="file" accept=".html,.htm,.csv,.txt" onchange="imp(this)"></section><section class="card"><h2>مسح البيانات</h2><p class="m">بيمسح كل الصفقات والقواعد من الجهاز ده.</p><button class="primary" style="background:var(--loss);color:var(--on)" onclick="wipe()">${cw?'اضغط تاني للتأكيد':'مسح كل البيانات'}</button></section>`}
+function saveR(){const v=i=>parseFloat($('#'+i).value);const s=v('rs'),d=v('rd'),m=v('rm');
+if(!(s>0)||!(d>0)||!(m>0)){toast('اكتب أرقام صحيحة');return}
+S.rules={size:s,daily:d,dd:m};save();render();toast('اتحفظت القواعد')}
+function ex(){const t=$('#bk');t.value=JSON.stringify({...S,trades:S.trades.map(({img,...r})=>r)});t.select();toast('انسخ النص (من غير الصور)')}
+function im(){try{const o=JSON.parse($('#bk').value);if(!o||!Array.isArray(o.trades)||!o.rules)throw 0;S=o;fix();save();render();toast('اتسترجعت البيانات')}catch(e){toast('النص مش نسخة صحيحة')}}
+const LG=[['ar','العربية'],['en','English'],['fr','Français'],['es','Español'],['tr','Türkçe']],LK=['en','fr','es','tr'];
+let LANG=(()=>{let v=null;try{v=localStorage.getItem('tjl')}catch(e){}v=v||(navigator.language||'en').slice(0,2).toLowerCase();return LG.some(x=>x[0]==v)?v:'en'})();
+let LI=LK.indexOf(LANG);
+const D={
+'تسجيل':["Log","Saisie","Registro","Kayıt"],
+'الصفقات':["Trades","Trades","Operaciones","İşlemler"],
+'الإحصائيات':["Stats","Stats","Estadísticas","İstatistik"],
+'القواعد':["Rules","Règles","Reglas","Kurallar"],
+'خسارة النهارده':["Today's loss","Perte du jour","Pérdida de hoy","Bugünkü zarar"],
+'الـ drawdown الكلي':["Total drawdown","Drawdown total","Drawdown total","Toplam drawdown"],
+'وصلت للحد. وقّف التداول النهارده.':["Limit reached. Stop trading today.","Limite atteinte. Arrêtez de trader aujourd'hui.","Límite alcanzado. Deja de operar hoy.","Limite doldu. Bugün işlemi bırak."],
+'قربت من الحد. فكّر قبل أي صفقة جديدة.':["Close to the limit. Think before any new trade.","Proche de la limite. Réfléchissez avant un nouveau trade.","Cerca del límite. Piénsalo antes de otra operación.","Limite yakın. Yeni işlemden önce düşün."],
+'صفقة جديدة':["New trade","Nouveau trade","Nueva operación","Yeni işlem"],
+'التاريخ':["Date","Date","Fecha","Tarih"],
+'الزوج':["Pair","Paire","Par","Parite"],
+'شراء':["Buy","Achat","Compra","Al"],
+'بيع':["Sell","Vente","Venta","Sat"],
+'دخول':["Entry","Entrée","Entrada","Giriş"],
+'ستوب':["Stop","Stop","Stop","Stop"],
+'خروج':["Exit","Sortie","Salida","Çıkış"],
+'النتيجة بالدولار (سالب للخسارة)':["Result in $ (negative for a loss)","Résultat en $ (négatif si perte)","Resultado en $ (negativo si es pérdida)","Sonuç $ (zarar için eksi)"],
+'حالتك النفسية':["Your mood","Votre état d'esprit","Tu estado de ánimo","Ruh halin"],
+'الخطأ':["Mistake","Erreur","Error","Hata"],
+'سبب الدخول وملاحظات':["Entry reason and notes","Raison d'entrée et notes","Motivo de entrada y notas","Giriş nedeni ve notlar"],
+'سكرين شوت (اختياري)':["Screenshot (optional)","Capture d'écran (facultatif)","Captura (opcional)","Ekran görüntüsü (isteğe bağlı)"],
+'حفظ الصفقة':["Save trade","Enregistrer","Guardar operación","İşlemi kaydet"],
+'هادي':["Calm","Calme","Tranquilo","Sakin"],
+'متوتر':["Nervous","Nerveux","Nervioso","Gergin"],
+'طماع':["Greedy","Avide","Codicioso","Açgözlü"],
+'خايف':["Fearful","Craintif","Miedoso","Korkmuş"],
+'غضبان':["Angry","En colère","Enojado","Kızgın"],
+'بدون خطأ':["No mistake","Aucune erreur","Sin error","Hatasız"],
+'دخول بدري':["Early entry","Entrée trop tôt","Entrada temprana","Erken giriş"],
+'ما احترمتش الستوب':["Ignored my stop","Stop non respecté","No respeté el stop","Stop'a uymadım"],
+'زودت اللوت':["Oversized lot","Lot trop grand","Lote excesivo","Lotu büyüttüm"],
+'صفقة انتقام':["Revenge trade","Trade de vengeance","Operación de venganza","İntikam işlemi"],
+'ضد الاتجاه':["Against the trend","Contre la tendance","Contra la tendencia","Trende karşı"],
+'خروج بدري':["Early exit","Sortie trop tôt","Salida temprana","Erken çıkış"],
+'لسه مفيش صفقات. سجّل أول صفقة من تبويب «تسجيل».':["No trades yet. Log your first one in the Log tab.","Aucun trade. Enregistrez le premier dans l'onglet Saisie.","Aún no hay operaciones. Registra la primera en Registro.","Henüz işlem yok. İlkini Kayıt sekmesinden ekle."],
+'حذف':["Delete","Supprimer","Eliminar","Sil"],
+'اضغط تاني للتأكيد':["Tap again to confirm","Appuyez encore pour confirmer","Toca otra vez para confirmar","Onay için tekrar dokun"],
+'إضافة سكرين شوت':["Add screenshot","Ajouter une capture","Añadir captura","Ekran görüntüsü ekle"],
+'الإحصائيات هتظهر بعد أول صفقة.':["Stats appear after your first trade.","Les stats apparaissent après le premier trade.","Las estadísticas aparecen tras la primera operación.","İstatistikler ilk işlemden sonra görünür."],
+'صافي النتيجة':["Net result","Résultat net","Resultado neto","Net sonuç"],
+'نسبة الربح':["Win rate","Taux de réussite","% de acierto","Kazanma oranı"],
+'عدد الصفقات':["Trade count","Nb de trades","Nº de operaciones","İşlem sayısı"],
+'متوسط R':["Avg R","R moyen","R promedio","Ort. R"],
+'أفضل يوم':["Best day","Meilleur jour","Mejor día","En iyi gün"],
+'أسوأ يوم':["Worst day","Pire jour","Peor día","En kötü gün"],
+'أخطاءك مكلّفاك كام':["What your mistakes cost","Ce que coûtent vos erreurs","Lo que te cuestan los errores","Hatalarının maliyeti"],
+'مسجّلتش أخطاء لحد دلوقتي.':["No mistakes logged yet.","Aucune erreur enregistrée.","Aún no registraste errores.","Henüz hata kaydı yok."],
+'قواعد الحساب':["Account rules","Règles du compte","Reglas de la cuenta","Hesap kuralları"],
+'حجم الحساب ($)':["Account size ($)","Taille du compte ($)","Tamaño de la cuenta ($)","Hesap büyüklüğü ($)"],
+'حد الخسارة اليومي %':["Daily loss limit %","Limite de perte quotidienne %","Límite de pérdida diaria %","Günlük zarar limiti %"],
+'حد الـ drawdown الكلي %':["Max total drawdown %","Drawdown total max %","Drawdown total máx. %","Maks. toplam drawdown %"],
+'حفظ القواعد':["Save rules","Enregistrer les règles","Guardar reglas","Kuralları kaydet"],
+'راجع النسب مع شروط شركتك. العدّاد بيحسب من الصفقات اللي سجّلتها هنا بس، مش من رصيد حسابك الفعلي.':["Check the limits against your firm's rules. The meters count only trades logged here, not your real account balance.","Vérifiez les limites avec les règles de votre firme. Les jauges ne comptent que les trades saisis ici, pas le solde réel.","Revisa los límites con las reglas de tu firma. Los medidores solo cuentan las operaciones registradas aquí, no el saldo real.","Limitleri firmanın kurallarıyla kontrol et. Göstergeler yalnızca burada kayıtlı işlemleri sayar, gerçek bakiyeyi değil."],
+'نسخة احتياطية':["Backup","Sauvegarde","Copia de seguridad","Yedek"],
+'بياناتك محفوظة على الجهاز ده بس. صدّرها وخزّنها في مكان تاني من وقت لوقت.':["Your data lives on this device only. Export it and store it elsewhere from time to time.","Vos données restent sur cet appareil. Exportez-les et gardez-les ailleurs de temps en temps.","Tus datos están solo en este dispositivo. Expórtalos y guárdalos en otro lugar de vez en cuando.","Verilerin yalnızca bu cihazda. Ara sıra dışa aktarıp başka yerde sakla."],
+'هنا هيظهر النص للنسخ، أو الصق نسخة قديمة للاسترجاع':["Text to copy appears here, or paste an old backup to restore","Le texte à copier apparaît ici, ou collez une ancienne sauvegarde","Aquí aparece el texto para copiar, o pega una copia para restaurar","Kopyalanacak metin burada çıkar ya da eski yedeği yapıştır"],
+'تصدير':["Export","Exporter","Exportar","Dışa aktar"],
+'استرجاع':["Restore","Restaurer","Restaurar","Geri yükle"],
+'استيراد من MT5':["Import from MT5","Importer depuis MT5","Importar desde MT5","MT5'ten içe aktar"],
+'في MT5: تبويب History، كليك يمين، Report، HTML. اختار الملف هنا. الصفقات المكررة بتتخطّى.':["In MT5: History tab, right-click, Report, HTML. Pick the file here. Duplicates are skipped.","Dans MT5 : onglet History, clic droit, Report, HTML. Choisissez le fichier ici. Les doublons sont ignorés.","En MT5: pestaña History, clic derecho, Report, HTML. Elige el archivo aquí. Los duplicados se omiten.","MT5'te: History sekmesi, sağ tık, Report, HTML. Dosyayı buradan seç. Tekrarlar atlanır."],
+'اكتب الزوج والنتيجة بالدولار':["Enter the pair and the result in $","Saisissez la paire et le résultat en $","Escribe el par y el resultado en $","Pariteyi ve sonucu $ yaz"],
+'اتحفظت الصفقة':["Trade saved","Trade enregistré","Operación guardada","İşlem kaydedildi"],
+'المساحة امتلأت. صدّر نسخة واحذف صور قديمة':["Storage full. Export a backup and delete old images","Stockage plein. Exportez et supprimez d'anciennes images","Almacenamiento lleno. Exporta y borra imágenes antiguas","Alan doldu. Yedekle ve eski görselleri sil"],
+'الصورة مش مقروءة':["Image unreadable","Image illisible","Imagen ilegible","Görsel okunamadı"],
+'اكتب أرقام صحيحة':["Enter valid numbers","Entrez des nombres valides","Escribe números válidos","Geçerli sayılar gir"],
+'اتحفظت القواعد':["Rules saved","Règles enregistrées","Reglas guardadas","Kurallar kaydedildi"],
+'انسخ النص (من غير الصور)':["Copy the text (images excluded)","Copiez le texte (sans images)","Copia el texto (sin imágenes)","Metni kopyala (görseller hariç)"],
+'اتسترجعت البيانات':["Data restored","Données restaurées","Datos restaurados","Veriler geri yüklendi"],
+'النص مش نسخة صحيحة':["Not a valid backup","Sauvegarde invalide","Copia no válida","Geçerli bir yedek değil"],
+'الملف مش بصيغة مفهومة':["Unrecognized file format","Format de fichier non reconnu","Formato de archivo no reconocido","Dosya biçimi anlaşılamadı"],
+'مفيش صفقات جديدة':["No new trades","Aucun nouveau trade","Sin operaciones nuevas","Yeni işlem yok"],
+'اتضاف {n} صفقة':["{n} trades added","{n} trades ajoutés","{n} operaciones añadidas","{n} işlem eklendi"],
+'الإعدادات':["Settings","Réglages","Ajustes","Ayarlar"],
+'تفضيلات':["Preferences","Préférences","Preferencias","Tercihler"],
+'المظهر':["Theme","Thème","Tema","Tema"],
+'تلقائي':["Auto","Auto","Auto","Otomatik"],
+'فاتح':["Light","Clair","Claro","Açık"],
+'داكن':["Dark","Sombre","Oscuro","Koyu"],
+'الزوج الافتراضي':["Default pair","Paire par défaut","Par predeterminado","Varsayılan parite"],
+'تنبيه عند وصول العدّاد لـ %':["Warn when a meter reaches %","Alerter quand une jauge atteint %","Avisar cuando un medidor llegue a %","Gösterge şu % olunca uyar"],
+'أقصى عدد صفقات في اليوم (0 يعني بدون حد)':["Max trades per day (0 = no limit)","Max de trades par jour (0 = illimité)","Máx. de operaciones por día (0 = sin límite)","Günlük maks. işlem (0 = sınırsız)"],
+'فرق توقيت سيرفر البروكر عن جهازك (بالساعات)':["Broker server time offset from your device (hours)","Décalage horaire du serveur du broker (heures)","Diferencia horaria del servidor del broker (horas)","Broker sunucusunun saat farkı (saat)"],
+'أنواع أخطاء إضافية (مفصولة بفاصلة)':["Extra mistake types (comma-separated)","Types d'erreurs supplémentaires (séparés par des virgules)","Tipos de error adicionales (separados por comas)","Ek hata türleri (virgülle ayır)"],
+'مسح البيانات':["Erase data","Effacer les données","Borrar datos","Verileri sil"],
+'بيمسح كل الصفقات والقواعد من الجهاز ده.':["Deletes all trades and rules from this device.","Supprime tous les trades et règles de cet appareil.","Elimina todas las operaciones y reglas de este dispositivo.","Bu cihazdaki tüm işlemleri ve kuralları siler."],
+'مسح كل البيانات':["Erase all data","Tout effacer","Borrar todo","Tümünü sil"],
+'وصلت للحد الأقصى لعدد الصفقات النهارده.':["You hit today's max trade count.","Nombre max de trades atteint aujourd'hui.","Llegaste al máximo de operaciones de hoy.","Bugünkü maks. işlem sayısına ulaştın."],
+'يومية التداول':["Trading journal","Journal de trading","Diario de trading","İşlem günlüğü"]};
+Object.assign(D,{"تخطّي":["Skip", "Passer", "Omitir", "Atla"],"التالي":["Next", "Suivant", "Siguiente", "İleri"],"ابدأ":["Start", "Commencer", "Empezar", "Başla"],"جهّز حسابك":["Set up your account", "Configure ton compte", "Configura tu cuenta", "Hesabını ayarla"],"ده بيظبط العدّادات. تقدر تغيّره بعدين من القواعد.":["This sets your meters. You can change it later in Rules.", "Cela règle tes jauges. Modifiable plus tard dans Règles.", "Esto ajusta tus medidores. Puedes cambiarlo luego en Reglas.", "Göstergeleri ayarlar. Sonra Kurallar'dan değiştirebilirsin."],"سجّل صفقاتك في ثواني":["Log trades in seconds", "Note tes trades en secondes", "Registra operaciones en segundos", "İşlemleri saniyeler içinde kaydet"],"اكتب الصفقة أو زامن تقرير MT5 دفعة واحدة.":["Type a trade or sync your MT5 report in one go.", "Saisis un trade ou synchronise ton rapport MT5 d'un coup.", "Escribe una operación o sincroniza tu informe MT5 de una vez.", "İşlemi yaz ya da MT5 raporunu tek seferde senkronla."],"احمي حسابك":["Protect your account", "Protège ton compte", "Protege tu cuenta", "Hesabını koru"],"عدّادات بتحذّرك قبل ما توصل لحد الخسارة اليومي أو الـ drawdown.":["Meters warn you before you hit the daily loss or drawdown limit.", "Des jauges t'alertent avant la limite de perte quotidienne ou de drawdown.", "Medidores te avisan antes del límite de pérdida diaria o drawdown.", "Göstergeler günlük zarar veya drawdown limitine gelmeden uyarır."],"افهم أنماطك":["Understand your patterns", "Comprends tes schémas", "Entiende tus patrones", "Kalıplarını anla"],"تقويم أرباح وأداء كل يوم ومستوى انضباط بيبيّن أخطاءك بالدولار.":["A P&L calendar, weekday performance and a discipline score that prices your mistakes.", "Un calendrier P&L, la performance par jour et un score de discipline qui chiffre tes erreurs.", "Calendario de P&L, rendimiento por día y un nivel de disciplina que cuantifica tus errores.", "K/Z takvimi, gün performansı ve hatalarını dolara çeviren disiplin skoru."],"عرض شرح التطبيق":["Show app tour", "Revoir la présentation", "Ver guía de la app", "Uygulama turunu göster"]},{'ربط MT5':["MT5 Link","Lien MT5","Vínculo MT5","MT5 bağlantısı"],'مزامنة من MT5':["Sync from MT5","Synchroniser depuis MT5","Sincronizar desde MT5","MT5'ten senkronla"],'آخر مزامنة':["Last sync","Dernière synchro","Última sincronización","Son senkron"],'لسه ما زامنتش':["Not synced yet","Pas encore synchronisé","Aún sin sincronizar","Henüz senkronlanmadı"],'صفقة مضافة':["trades added","nouveaux trades","operaciones nuevas","yeni işlem"],'تعديل الصفقة':["Edit trade","Modifier le trade","Editar operación","İşlemi düzenle"],'حفظ التعديل':["Save changes","Enregistrer","Guardar cambios","Değişiklikleri kaydet"],'إلغاء':["Cancel","Annuler","Cancelar","İptal"],'تعديل':["Edit","Modifier","Editar","Düzenle"],'اتحفظ التعديل':["Changes saved","Modifications enregistrées","Cambios guardados","Değişiklikler kaydedildi"],'أداءك حسب اليوم':["Performance by weekday","Performance par jour","Rendimiento por día","Güne göre performans"],'ربح':["Profit","Gain","Ganancia","Kâr"],'خسارة':["Loss","Perte","Pérdida","Zarar"],'النتيجة بالدولار':["Result in $","Résultat en $","Resultado en $","Sonuç ($)"],'أهلاً في يوميتك':["Welcome to your journal","Bienvenue dans ton journal","Bienvenido a tu diario","Günlüğüne hoş geldin"],'سجّل صفقاتك، راقب حدود حسابك، وشوف أنماطك بوضوح.':["Log trades, watch your account limits, and see your patterns clearly.","Note tes trades, surveille tes limites et vois tes schémas.","Registra operaciones, vigila tus límites y descubre tus patrones.","İşlemlerini kaydet, limitlerini izle, kalıplarını gör."],'مستوى الانضباط':["Discipline score","Score de discipline","Nivel de disciplina","Disiplin skoru"],'صفقات نظيفة ورا بعض':["Clean trades in a row","Trades propres d'affilée","Operaciones limpias seguidas","Üst üste temiz işlem"],'الشهر السابق':["Previous month","Mois précédent","Mes anterior","Önceki ay"],'الشهر التالي':["Next month","Mois suivant","Mes siguiente","Sonraki ay"],'صافي الشهر':["Month net","Net du mois","Neto del mes","Aylık net"]});
+const tx=s=>LI<0?s:(D[s]&&D[s][LI])||s;
+function xl(root){if(LI<0)return;const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);let n;while(n=w.nextNode()){const t=n.nodeValue.trim();if(t&&D[t])n.nodeValue=n.nodeValue.replace(t,()=>D[t][LI])}
+root.querySelectorAll('[placeholder]').forEach(e=>{const t=e.getAttribute('placeholder');if(D[t])e.setAttribute('placeholder',D[t][LI])})}
+function setL(v){LANG=v;LI=LK.indexOf(v);try{localStorage.setItem('tjl',v)}catch(e){}render()}
+let shot=null;
+const sel=(a,v)=>'<option value=""'+(v?'':' selected')+'>—</option>'+a.map(x=>`<option value="${x}"${x==v?' selected':''}>${x}</option>`).join('');
+function shrink(file,cb){const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const k=Math.min(1,900/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext('2d').drawImage(im,0,0,c.width,c.height);cb(c.toDataURL('image/jpeg',.6))};im.onerror=()=>toast('الصورة مش مقروءة');im.src=r.result};r.readAsDataURL(file)}
+function pick(el){const f=el.files[0];if(!f)return;shrink(f,u=>{shot=u;const p=$('#pv');p.src=u;p.hidden=false})}
+function attach(id){const i=document.createElement('input');i.type='file';i.accept='image/*';i.onchange=()=>{const f=i.files[0];if(!f)return;shrink(f,u=>{const t=S.trades.find(x=>x.id==id);t.img=u;if(!save()){delete t.img;toast('المساحة امتلأت. صدّر نسخة واحذف صور قديمة');return}render()})};i.click()}
+function upd(id,k,v){const t=S.trades.find(x=>x.id==id);t[k]=v;save()}
+function big(el){el.classList.toggle('big')}
+const pn=s=>{s=String(s||'').replace(/[\s\u00a0]/g,'');s=(s.includes(',')&&!s.includes('.'))?s.replace(',','.'):s.replace(/,/g,'');const v=parseFloat(s);return isNaN(v)?null:v};
+function imp(el){const fl=el.files[0];if(!fl)return;const rd=new FileReader();rd.onload=()=>{try{const n=doImp(String(rd.result));S.set.sync={t:Date.now(),n};save();toast(n?tx('اتضاف {n} صفقة').replace('{n}',n):'مفيش صفقات جديدة');render()}catch(e){toast('الملف مش بصيغة مفهومة')}};rd.readAsText(fl)}
+function doImp(txt){let rows=[];
+if(/<table/i.test(txt)){new DOMParser().parseFromString(txt,'text/html').querySelectorAll('tr').forEach(tr=>rows.push([...tr.children].map(c=>c.textContent.trim())))}
+else{const sp=txt.includes('\t')?'\t':txt.split(';').length>txt.split(',').length?';':',';rows=txt.split(/\r?\n/).map(l=>l.split(sp).map(c=>c.replace(/^"|"$/g,'').trim()))}
+let h=-1,I={};
+for(let i=0;i<rows.length;i++){const l=rows[i].map(c=>c.toLowerCase());
+if(l.includes('symbol')&&l.includes('profit')&&l.includes('type')&&l.filter(c=>c=='time').length>1){h=i;
+const tm=[],pr=[];l.forEach((c,j)=>{if(c=='time')tm.push(j);if(c=='price')pr.push(j)});
+I={ct:tm[1],ot:tm[0],op:pr[0],cp:pr[1],id:l.indexOf('position'),sy:l.indexOf('symbol'),ty:l.indexOf('type'),sl:l.findIndex(c=>c.replace(/\s/g,'')=='s/l'),cm:l.indexOf('commission'),sw:l.indexOf('swap'),pf:l.indexOf('profit')};break}}
+if(h<0)throw 0;
+const have=new Set(S.trades.map(t=>t.pid).filter(Boolean));let n=0,go=false;
+for(const c of rows.slice(h+1)){const ty=(c[I.ty]||'').toLowerCase();
+if(ty!='buy'&&ty!='sell'){if(go)break;continue}
+go=true;const pf=pn(c[I.pf]);if(pf==null)continue;
+const pid=c[I.id]||'';if(pid&&have.has(pid))continue;
+const pnl=pf+(I.cm>=0?pn(c[I.cm])||0:0)+(I.sw>=0?pn(c[I.sw])||0:0),en=pn(c[I.op]),xt=pn(c[I.cp]),sl=I.sl>=0?pn(c[I.sl]):null,s0=sl>0?sl:null;
+const dt=(c[I.ct]||c[I.ot]||'').slice(0,10).replace(/\./g,'-');
+S.trades.push({id:Date.now()+n,pid,date:dt||today(),pair:(c[I.sy]||'').toUpperCase(),dir:ty,en,ex:xt,sl:s0,pnl:Math.round(pnl*100)/100,r:calcR(ty,en,xt,s0),mood:'',mis:'',note:''});n++}
+if(n)save();return n}
+function render(){nav();renderTop();$('#v').innerHTML={add:vAdd,list:vList,stats:vStats,rules:vRules,set:vSet}[tab]();document.documentElement.lang=LANG;document.documentElement.dir=LANG=='ar'?'rtl':'ltr';document.title=tx('يومية التداول');if(S.set.th=='auto')document.documentElement.removeAttribute('data-theme');else document.documentElement.setAttribute('data-theme',S.set.th);obR();xl(document.body);if(tab=='add'&&eid)fillE();if(lt!==tab){lt=tab;const v=$('#v');v.classList.remove('in');void v.offsetWidth;v.classList.add('in');cu()}}
+let lt=null;
+render();
+</script>
+<script>if('serviceWorker' in navigator)addEventListener('load',()=>{try{navigator.serviceWorker.register('sw.js')}catch(e){}});</script>
+</body>
+</html>
